@@ -1,0 +1,3 @@
+[submodule "litedb-async"]
+	path = litedb-async
+	url = git@github.com:mlockett42/litedb-async.git
