@@ -29,11 +29,12 @@ namespace litedbasynctest
                 LastName = "Smith"
             };
 
-            await collection.UpsertAsync(person);
+            var upsertResult = await collection.UpsertAsync(person);
+            Assert.True(upsertResult);
 
-            var result = await collection.ToListAsync();
-            Assert.Single(result);
-            var resultPerson = result[0];
+            var listResult = await collection.ToListAsync();
+            Assert.Single(listResult);
+            var resultPerson = listResult[0];
             Assert.Equal(person.Id, resultPerson.Id);
             Assert.Equal(person.FirstName, resultPerson.FirstName);
             Assert.Equal(person.LastName, resultPerson.LastName);
