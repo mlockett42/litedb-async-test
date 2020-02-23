@@ -12,3 +12,7 @@ To run the unit tests
 To run a single specific unit test
 
 `dotnet test --filter DisplayName=litedbasynctest.UnitTest1.Test1`
+
+## VS Code config
+
+When checking out for the first time copy the `.vscode/launch.json.default` and `.vscode/tasks.json.default` to `.vscode/launch.json` and `.vscode/tasks.json`.
