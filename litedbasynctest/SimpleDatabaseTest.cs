@@ -8,19 +8,18 @@ namespace litedbasynctest
 {
     public class SimpleDatabaseTest
     {
-        [Fact]
-        public void TestCanOpenDatabase()
+        private readonly string _databasePath;
+        private readonly LiteDatabaseAsync _db;
+        public SimpleDatabaseTest()
         {
-            string databasePath = Path.Combine(Path.GetTempPath(), "litedbn-async-testing-" + Path.GetRandomFileName() + ".db");
-            var db = new LiteDatabaseAsync(databasePath);
+            _databasePath = Path.Combine(Path.GetTempPath(), "litedbn-async-testing-" + Path.GetRandomFileName() + ".db");
+            _db = new LiteDatabaseAsync(_databasePath);
         }
 
         [Fact]
         public async Task TestCanUpsertAndGetList()
         {
-            string databasePath = Path.Combine(Path.GetTempPath(), "litedb-async-testing-" + Path.GetRandomFileName() + ".db");
-            var db = new LiteDatabaseAsync(databasePath);
-            var collection = db.GetCollection<Person>();
+            var collection = _db.GetCollection<Person>();
 
             var person = new Person()
             {
@@ -43,9 +42,7 @@ namespace litedbasynctest
         [Fact]
         public async Task TestCanInsertAndGetList()
         {
-            string databasePath = Path.Combine(Path.GetTempPath(), "litedb-async-testing-" + Path.GetRandomFileName() + ".db");
-            var db = new LiteDatabaseAsync(databasePath);
-            var collection = db.GetCollection<Person>();
+            var collection = _db.GetCollection<Person>();
 
             var person = new Person()
             {
@@ -69,9 +66,7 @@ namespace litedbasynctest
         [Fact]
         public async Task TestInsertingSameRecordTwiceRaisesException()
         {
-            string databasePath = Path.Combine(Path.GetTempPath(), "litedb-async-testing-" + Path.GetRandomFileName() + ".db");
-            var db = new LiteDatabaseAsync(databasePath);
-            var collection = db.GetCollection<Person>();
+            var collection = _db.GetCollection<Person>();
 
             var person = new Person()
             {
@@ -82,6 +77,21 @@ namespace litedbasynctest
 
             await collection.InsertAsync(person);
             await Assert.ThrowsAnyAsync<LiteAsyncException>(async () => await collection.InsertAsync(person));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {      
+                _db.Dispose();
+                File.Delete(_databasePath);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
