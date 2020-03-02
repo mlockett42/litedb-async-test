@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace litedbasynctest
 {
-    public class SimpleDatabaseTest
+    public class SimpleDatabaseTest : IDisposable
     {
         private readonly string _databasePath;
         private readonly LiteDatabaseAsync _db;
