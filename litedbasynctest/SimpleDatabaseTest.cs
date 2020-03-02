@@ -31,7 +31,7 @@ namespace litedbasynctest
             var upsertResult = await collection.UpsertAsync(person);
             Assert.True(upsertResult);
 
-            var listResult = await collection.QueryAsync().ToListAsync();
+            var listResult = await collection.Query().ToListAsync();
             Assert.Single(listResult);
             var resultPerson = listResult[0];
             Assert.Equal(person.Id, resultPerson.Id);
@@ -55,7 +55,7 @@ namespace litedbasynctest
             Assert.True(insertResult.IsGuid);
             Assert.Equal(person.Id, insertResult.AsGuid);
 
-            var listResult = await collection.QueryAsync().ToListAsync();
+            var listResult = await collection.Query().ToListAsync();
             Assert.Single(listResult);
             var resultPerson = listResult[0];
             Assert.Equal(person.Id, resultPerson.Id);
