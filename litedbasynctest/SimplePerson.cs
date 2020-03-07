@@ -5,7 +5,7 @@ using System.IO;
 
 namespace litedbasynctest
 {
-    public class Person
+    public class SimplePerson
     {
         public Guid Id { get; set; }
 

@@ -19,9 +19,9 @@ namespace litedbasynctest
         [Fact]
         public async Task TestCanUpsertAndGetList()
         {
-            var collection = _db.GetCollection<Person>();
+            var collection = _db.GetCollection<SimplePerson>();
 
-            var person = new Person()
+            var person = new SimplePerson()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -42,9 +42,9 @@ namespace litedbasynctest
         [Fact]
         public async Task TestCanInsertAndGetList()
         {
-            var collection = _db.GetCollection<Person>();
+            var collection = _db.GetCollection<SimplePerson>();
 
-            var person = new Person()
+            var person = new SimplePerson()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -66,9 +66,9 @@ namespace litedbasynctest
         [Fact]
         public async Task TestInsertingSameRecordTwiceRaisesException()
         {
-            var collection = _db.GetCollection<Person>();
+            var collection = _db.GetCollection<SimplePerson>();
 
-            var person = new Person()
+            var person = new SimplePerson()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
