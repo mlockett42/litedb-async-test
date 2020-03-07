@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using LiteDB;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     /// <summary>
     /// Extension and additional methods for debug

@@ -4,7 +4,7 @@ using LiteDB.Async;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class SimpleDatabaseTest : IDisposable
     {

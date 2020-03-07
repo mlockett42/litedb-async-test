@@ -4,7 +4,7 @@ using Xunit;
 using System.Threading.Tasks;
 using LiteDB.Async;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class Select_Tests : Person_Tests
     {

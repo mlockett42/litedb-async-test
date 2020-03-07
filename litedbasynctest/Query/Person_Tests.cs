@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using LiteDB.Async;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class Person_Tests : IDisposable
     {

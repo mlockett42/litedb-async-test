@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LiteDB;
 using FluentAssertions;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class AutoIdTest
     {

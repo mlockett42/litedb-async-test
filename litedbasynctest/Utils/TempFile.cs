@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class TempFile : IDisposable
     {

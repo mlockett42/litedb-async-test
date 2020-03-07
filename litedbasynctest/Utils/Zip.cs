@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using LiteDB;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     // { 
     //     "_id": "01001", 

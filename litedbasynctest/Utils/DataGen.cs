@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using LiteDB;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class DataGen
     {

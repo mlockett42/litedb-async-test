@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using LiteDB.Async;
 using LiteDB;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class FindAll_Tests
     {

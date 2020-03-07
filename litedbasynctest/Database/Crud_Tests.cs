@@ -6,7 +6,7 @@ using Xunit;
 using System.Threading.Tasks;
 using LiteDB.Async;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class Crud_Tests
     {

@@ -6,7 +6,7 @@ using LiteDB;
 using System.Threading.Tasks;
 using LiteDB.Async;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class QueryApi_Tests : Person_Tests
     {

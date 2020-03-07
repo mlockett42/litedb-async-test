@@ -7,7 +7,7 @@ using LiteDB;
 using System.Threading.Tasks;
 using LiteDB.Async;
 
-namespace litedbasynctest
+namespace LiteDB.Async.Test
 {
     public class MultiKey_Mapper_Tests
     {
