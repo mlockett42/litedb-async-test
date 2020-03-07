@@ -10,8 +10,6 @@ namespace litedbasynctest
 {
     public class AutoIdTest
     {
-        private readonly string _databasePath;
-        private readonly LiteDatabaseAsync _db;
 
         #region Model
 
