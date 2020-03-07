@@ -8,15 +8,10 @@ using FluentAssertions;
 
 namespace litedbasynctest
 {
-    public class AutoIdTest/* : IDisposable*/
+    public class AutoIdTest
     {
         private readonly string _databasePath;
         private readonly LiteDatabaseAsync _db;
-        /*public SimpleDatabaseTest()
-        {
-            _databasePath = Path.Combine(Path.GetTempPath(), "litedbn-async-testing-" + Path.GetRandomFileName() + ".db");
-            _db = new LiteDatabaseAsync(_databasePath);
-        }*/
 
         #region Model
 
@@ -191,6 +186,97 @@ namespace litedbasynctest
                 cint_11.Id.Should().Be(11);
                 cint_7.Id.Should().Be(7);
                 cint_12.Id.Should().Be(12);
+            }
+        }
+
+        [Fact]
+        public async Task AutoId_BsonDocument()
+        {
+            using (var db = new LiteDatabaseAsync(new MemoryStream()))
+            {
+                var col = db.GetCollection("Writers");
+                await col.InsertAsync(new BsonDocument { ["Name"] = "Mark Twain" });
+                await col.InsertAsync(new BsonDocument { ["Name"] = "Jack London", ["_id"] = 1 });
+
+                // create an index in name field
+                await col.EnsureIndexAsync("LowerName", "LOWER($.Name)");
+
+                var mark = await col.FindOneAsync(Query.EQ("LOWER($.Name)", "mark twain"));
+                var jack = await col.FindOneAsync(Query.EQ("LOWER($.Name)", "jack london"));
+
+                // checks if auto-id is a ObjectId
+                mark["_id"].IsObjectId.Should().BeTrue();
+                jack["_id"].IsInt32.Should().BeTrue(); // jack do not use AutoId (fixed in int32)
+            }
+        }
+
+        [Fact]
+        public async Task AutoId_No_Duplicate_After_Delete()
+        {
+            // using strong type
+            using (var db = new LiteDatabaseAsync(new MemoryStream()))
+            {
+                var col = db.GetCollection<EntityInt>("col1");
+
+                var one = new EntityInt { Name = "One" };
+                var two = new EntityInt { Name = "Two" };
+                var three = new EntityInt { Name = "Three" };
+                var four = new EntityInt { Name = "Four" };
+
+                // insert
+                await col.InsertAsync(one);
+                await col.InsertAsync(two);
+
+                one.Id.Should().Be(1);
+                two.Id.Should().Be(2);
+
+                // now delete first 2 rows
+                await col.DeleteAsync(one.Id);
+                await col.DeleteAsync(two.Id);
+
+                // and insert new documents
+                await col.InsertAsync(new EntityInt[] { three, four });
+
+                three.Id.Should().Be(3);
+                four.Id.Should().Be(4);
+            }
+
+            // using bsondocument/engine
+            using (var db = new LiteDatabaseAsync(new MemoryStream()))
+            {
+                var one = new BsonDocument { ["Name"] = "One" };
+                var two = new BsonDocument { ["Name"] = "Two" };
+                var three = new BsonDocument { ["Name"] = "Three" };
+                var four = new BsonDocument { ["Name"] = "Four" };
+
+                var col = db.GetCollection("col", BsonAutoId.Int32);
+
+                await col.InsertAsync(one);
+                await col.InsertAsync(two);
+
+                one["_id"].AsInt32.Should().Be(1);
+                two["_id"].AsInt32.Should().Be(2);
+
+                // now delete first 2 rows
+                await col.DeleteAsync(one["_id"].AsInt32);
+                await col.DeleteAsync(two["_id"].AsInt32);
+
+                // and insert new documents
+                await col.InsertAsync(new BsonDocument[] { three, four });
+
+                three["_id"].AsInt32.Should().Be(3);
+                four["_id"].AsInt32.Should().Be(4);
+            }
+        }
+
+        [Fact]
+        public async Task AutoId_Zero_Int()
+        {
+            using (var db = new LiteDatabaseAsync(":memory:"))
+            {
+                var test = db.GetCollection("Test", BsonAutoId.Int32);
+                var doc = new BsonDocument() { ["_id"] = 0, ["p1"] = 1 };
+                await test.InsertAsync(doc); // -> NullReferenceException
             }
         }
     }
