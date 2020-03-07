@@ -2,7 +2,7 @@ using FluentAssertions;
 using System.Linq;
 using Xunit;
 using System.Threading.Tasks;
-using litedbasync;
+using LiteDB.Async;
 
 namespace litedbasynctest
 {

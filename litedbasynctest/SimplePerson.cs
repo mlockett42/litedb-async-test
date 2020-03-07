@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using litedbasync;
+using LiteDB.Async;
 using System.IO;
 
 namespace litedbasynctest

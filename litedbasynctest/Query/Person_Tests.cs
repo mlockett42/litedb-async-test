@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using litedbasync;
+using LiteDB.Async;
 
 namespace litedbasynctest
 {
